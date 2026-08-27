@@ -1,0 +1,12 @@
+# 15)Calculao el promedio ponderado: Calcula el promedio ponderado de tres notas con pesos   0.2, 0.3 y 0.5, usando solo operaciones aritmeticas.
+
+#ingreso de datos
+n1 = float(input("ingrese la primera nota: \n"))
+n2 = float(input("ingrese la segunda nota: \n"))
+n3 = float(input("ingrese la tercera nota: \n"))
+
+#hallar el promedio ponderado
+promedio = ((n1 * 0.2) + (n2 * 0.3) + (n3 * 0.5)) / (0.2 + 0.3 + 0.5)
+
+#imprimir el resultado 
+print(f"El promedio ponderado del estudianes es {promedio:.2f}.")
