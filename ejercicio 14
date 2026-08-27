@@ -1,0 +1,8 @@
+# 14)
+
+horas = int(input("ingrese ña cantidad de horas: \n"))
+
+minutos = horas * 60
+segundos = horas * 3600
+
+print(f"en {horas} horas hay {minutos} y {segundos} segundos.")
