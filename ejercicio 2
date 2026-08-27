@@ -1,0 +1,11 @@
+# 2
+
+palabra = input("ingrrse una palabra: \n")
+
+mayusculas = palabra.upper()
+minusculas = palabra.lower()
+primera = palabra.capitalize()
+
+print(f"Cambiamos la palabra {palabra} en mayuscula: {mayusculas}.")
+print(f"Cambiamos la palabra {palabra} en minuscula: {minusculas}.")
+print(f"Cambiamos la palabra {palabra} en mayuscula su primera letra: {primera}.")
