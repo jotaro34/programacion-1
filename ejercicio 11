@@ -1,0 +1,9 @@
+# 11
+
+precio = float(input("ingrese el precio: \n"))
+
+igv = precio + (precio * 0.18)
+comision = ( igv * 0.05)
+total = precio + (precio *0.18) + (comision)
+
+print(f"el precio total con igv mas comision es {total}.")
