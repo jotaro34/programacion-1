@@ -1,0 +1,18 @@
+# 7)
+
+#llamamos el modulo math la funcion sqrt 
+from math import sqrt
+
+#ingresar los datos
+x1 = float(input("ingrese el valor de x1: \n"))
+x2 = float(input("ingrese el valor de x2: \n"))
+y1 = float(input("ingrese el valor de y1: \n"))
+y2 = float(input("ingrese el valor de y2: \n"))
+z1 = float(input("ingrese el valor de z1: \n"))
+z2 = float(input("ingrese el valor de z2: \n"))
+
+#hallar la distancia euclidiana
+distancia = sqrt(((x2 - x1)**2) + ((y2 - y1)**2) + ((z2 -z1)**2))
+
+#imprimir la respuesta
+print(f"la distancia euclidiana es {distancia:.2f}.")
