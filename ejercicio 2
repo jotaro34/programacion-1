@@ -1,0 +1,13 @@
+# 2) Dados los valores el codigo de postulante, primer nombre(ST) y nota1(NR) y nota2(NR) de un estudiante , calcular el promedio ponderado de las notas (nota1=60%, nota2=40%)
+
+#ingreso de datos
+codigo = int(input("ingrese su codigo de estudiante: \n"))
+nombre = input("ingrese su nombre: \n")
+nota1 = float(input("ingrese la nota 1: \n"))
+nota2 = float(input("ingrese la nota 2: \n")) 
+
+#calcular el promedio ponderado
+promedio = (nota1 * 0.6) + (nota2 * 0.4)
+
+#imprimer el resultado
+print(f"el promedio ponderado del estudiante {nombre} con el codigo {codigo} es {promedio:.2f}")
