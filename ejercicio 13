@@ -1,4 +1,5 @@
-# 2) Dados los valores el codigo de postulante, primer nombre(ST) y nota1(NR) y nota2(NR) de un estudiante , calcular el promedio ponderado de las notas (nota1=60%, nota2=40%)
+# 13)Transformacion de un texo pide una palabra y genera: Verson en mayusculas, version en minusculas 
+version con solo la primera letra en mayusculas. Todo en secuencia, sin condicionales.
 
 palabra = input("ingrrse una palabra: \n")
 
