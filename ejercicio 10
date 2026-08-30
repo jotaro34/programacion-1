@@ -1,0 +1,12 @@
+# 10)Conversion multiple de unidades: Pide un valor en metros y muestra su equivalente en centimetros, milimetros y kilometros, usando solo operadores matematicos y variables.
+
+#ingresar datos
+metros = float(input("ingrese la cantidad de metros: \n"))
+
+#calcular al conversion de metros
+kilometros = metros * 0.001
+centimetros = metros * 100
+milimetros = metros * 1000
+
+#imprimir eñl resultado
+print(f"convertimos {metros} metros a {kilometros:.2f} km, {centimetros:.2f} cm, {milimetros:.2f} mm.")
