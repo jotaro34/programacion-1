@@ -1,4 +1,4 @@
-# 14)
+# 14)Conversion de horas: Dada una cantidad de horas, muestra su equivalente en minutos y segundos, calculando todo en la misma ejecucion secuencial.
 
 horas = int(input("ingrese ña cantidad de horas: \n"))
 
