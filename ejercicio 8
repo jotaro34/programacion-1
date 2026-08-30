@@ -1,0 +1,11 @@
+# 8)Dada una cantidad de horas para completar un trabajo(NE), calcular el minimo de dias(NE) de maximo 8 horas de trabajo necesarios para completar el trabajo.
+
+#ingresar los datos
+horas = int(input("ingrese la cantidad horas trabajadas: \n"))
+
+#calcular la cantidad de horas necesarias 
+dias = horas / 8 
+dias_minimos = int(dias + 0.99)
+
+#imprimir el resultado
+print(f"se necesitan como minimo {dias_minimos} dias para completar el trabajo.")
