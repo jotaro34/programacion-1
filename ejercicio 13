@@ -1,5 +1,4 @@
-# 13)Transformacion de un texo pide una palabra y genera: Verson en mayusculas, version en minusculas 
-version con solo la primera letra en mayusculas. Todo en secuencia, sin condicionales.
+# 13)Transformacion de un texo pide una palabra y genera: Verson en mayusculas, version en minusculas version con solo la primera letra en mayusculas. Todo en secuencia, sin condicionales.
 
 palabra = input("ingrrse una palabra: \n")
 
