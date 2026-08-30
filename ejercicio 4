@@ -1,0 +1,14 @@
+# 4)Dados los valores de los catetos de un triangulo rectangulo(NE), calcular su hipotenusa. 
+
+#desde la libreria math llama la funcion sqrt
+from math import sqrt
+
+#Ingrese los datos
+cateto_1 = int(input("ingrese el valor del cateto 1: \n"))
+cateto_2 = int(input("ingrese el valor del cateto 2: \n"))
+
+#calcular la hipotenusa 
+hipotenusa = sqrt ((cateto_1 ** 2) + (cateto_2 ** 2))
+
+#imprimir el resultado 
+print(f"la hipotenusa del triangulo rectangulo es {hipotenusa:.2f}")
