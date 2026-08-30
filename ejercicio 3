@@ -1,0 +1,11 @@
+# 3)Dado el precio de un articulo(NR) y la cantidad de dinero entregada por un cliente(NE), calcular el vuelto o cambio a entregarse.
+
+#ingrese los datos
+precio = float(input("ingrese el precio del articulo: \n"))
+cantidad = int(input("ingrese la cantidad del dinero entregado: \n"))
+
+#calcular el cambio o vuelto
+vuelto = cantidad - precio 
+
+#imprimir el resultado 
+print(f"el vuelto del cliente es {vuelto:.2f}")
