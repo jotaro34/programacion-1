@@ -1,4 +1,4 @@
-# 15)Calculao el promedio ponderado: Calcula el promedio ponderado de tres notas con pesos   0.2, 0.3 y 0.5, usando solo operaciones aritmeticas.
+# 15)Calculao el promedio ponderado: Calcula el promedio ponderado de tres notas con pesos 0.2, 0.3 y 0.5, usando solo operaciones aritmeticas.
 
 #ingreso de datos
 n1 = float(input("ingrese la primera nota: \n"))
