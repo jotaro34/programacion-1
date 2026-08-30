@@ -1,10 +1,13 @@
 # 1)Dados los valores el codigo de postulante(ST). primer nombre(ST) y nota1 (NR) y nota2(NR) de un estudainte, calcular el promedio de las notas.
 
+#ingresar los datos
 codigo = int(input("ingrese su codigo: \n"))
 nombre = input("ingrese su nombre: \n")
 nota1 = float(input("ingrese la nota 1: \n"))
 nota2 = float(input("ingrese la nota 2: \n"))
 
+#calcular el promedio 
 promedio = (nota1 + nota2) / 2
 
+#imprimir el resultado
 print(f"el primedio del estudiante {nombre} con el codigo {codigo} es {promedio:.2f}.")
