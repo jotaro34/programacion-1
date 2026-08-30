@@ -1,0 +1,13 @@
+# 9)Dados los catetos de un triangulo rectangulo(NE), calcular su perimetro y area.
+
+#ingrese los datos
+cateto_1 = int(input("ingrese el valor del cateto 1: \n")) 
+cateto_2 = int(input("ingrese el valor del cateto 2: \n"))
+hipotenusa = int(input("ingrese el valor de la hiupotenusa: \n"))
+
+#calcular el area y perimetro 
+area = (cateto_1 * cateto_2) / 2
+perimetro = cateto_2 + cateto_1 + hipotenusa
+
+#imprimir el resultado 
+print(f"el area del triangulo rectangulo es {area:.2f} y el perimetro es {perimetro}.")
