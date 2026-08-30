@@ -1,9 +1,12 @@
-# 11
+# 11)Calculo de precio final con impuestos y comisiones: A partir de un precio base, calcula el precio final sumando el IGV(18%) y una comision del 5% de forma directa en la misma secuencia.
 
+#ingresa los datos
 precio = float(input("ingrese el precio: \n"))
 
+#calcular el irecio final
 igv = precio + (precio * 0.18)
 comision = ( igv * 0.05)
 total = precio + (precio *0.18) + (comision)
 
+#imprimir el resultado
 print(f"el precio total con igv mas comision es {total}.")
