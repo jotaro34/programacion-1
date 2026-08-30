@@ -1,4 +1,4 @@
-# 2
+# 2) Dados los valores el codigo de postulante, primer nombre(ST) y nota1(NR) y nota2(NR) de un estudiante , calcular el promedio ponderado de las notas (nota1=60%, nota2=40%)
 
 palabra = input("ingrrse una palabra: \n")
 
