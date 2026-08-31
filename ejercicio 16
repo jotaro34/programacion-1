@@ -8,3 +8,27 @@
     mostrar despglose: base, bonificacion, descuentos y neto a paga
 """ 
 
+#ingrese de datos
+nombre = input("ingrese su nombre: \n")
+horas_trabajadas = int(input("ingrese las horas de trabajo: \n"))
+tarifa_hora = float(input("ingrese la tarifa por hora: \n"))
+turno = input("indique que turno es dia o noche: \n")
+horas_totales_equipo = int(input("ingrese las horas total del equipo: \n"))
+propina_total_dia= float(input("ingrese el total de propinas de dia: \n"))
+
+#calcular el pago total
+pago_base = horas_trabajadas * tarifa_hora
+if (turno == "noche"):
+    bonificacion = pago_base * 0.12
+else:
+    bonificacion = 0
+
+propina = (horas_trabajadas / horas_totales_equipo) * propina_total_dia
+total_bruto = pago_base + bonificacion + propina
+afp = total_bruto * 0.08
+essalud = total_bruto * 0.03
+descuento = afp + essalud
+neto = total_bruto - descuento
+
+#imprimir el resultado
+print(f"el pago base es {pago_base}, la bonificacion {bonificacion:.2f}, el descuento es {descuento:.2f} y pago neto es {neto:.2f}.")
