@@ -1,3 +1,9 @@
 # 12)Operaciones encadenadas con teres numeros: Dados tres numeros, realiza la operacion: (a+b)*c(a-b)+c/frac{(a+b)/times c}(a-b)+c(a+b)*c y muestra el resultado en una solo linea de codigo.
 
+#ingreso de datos
+a = float(input("ingrese el valor de a: \n"))
+b = float(input("ingrese el valor de b: \n")) 
+c = float(input("ingrese el valor de c: \n"))
 
+#imprimir y calculamos el resultado
+print(((a + b) * c) / ((a - b) + c))
