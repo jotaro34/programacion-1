@@ -1,0 +1,10 @@
+# 17)Nomina con indicador de turno y prorrateo de propinas. contexto Un restaurante paga por hora, suma un bono por turno noche y reparte propina proporcional a las horas del mozo
+
+"""tarea (Secuencial)
+    base = horas_mozo * tarifa_hotra
+    bono_noche = indicador_noche * 0.12 * base
+    propina_mozo = propina_total * (horas_mozo / horas_equipo)
+    bruto = base + bono bono_noche + propina_mozo
+    descuentos = bruto * (afp + essalud)
+    neto = bruto - descuentos. Imprimie base, bono_noche, propina_mozo, descuentos, neto"""
+
