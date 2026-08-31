@@ -1,0 +1,10 @@
+# 20)Plan de datos coon excedente usando valor absoluto. Contexto: Calcular el cargo por excelentes de  datos sin condicionales.
+
+"""Tareas(Secunecial):
+    x = gb_consumidos - gb_incluidos
+    excedente sin if: excedente = (x abs(x))/2 <- (esto equivale a max(0,x))
+    cargo_excedente = excedente * precio_extra_por_gb
+    total = carego_base + cargo_excedente
+    imprime excedente, cargo_excedente, total"""
+
+    
