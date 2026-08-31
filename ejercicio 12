@@ -1,10 +1,3 @@
 # 12)Operaciones encadenadas con teres numeros: Dados tres numeros, realiza la operacion: (a+b)*c(a-b)+c/frac{(a+b)/times c}(a-b)+c(a+b)*c y muestra el resultado en una solo linea de codigo.
 
-a = int(input("ingreese la base: \n"))
-b = int(input("ingrese la altura: \n"))
-c = int(input("ingrese la pipotenusa: \n"))
 
-perimetro = a + b + c 
-area = (a * b) / 2
-
-print(f"el perimetro del triangulo es {perimetro} y el area es {area}.")
