@@ -1,0 +1,9 @@
+# 19)Puntaje academico continuo con bonos y penalizaciones sueves. Contexto: Construir un puntaje final sin reglas discretas, solo con formulas continuas.
+
+"""tareas(Secuencial):
+    prom = 0.25*pc1 + o.25*pc2 + 0.25*parcial + 0.25*final
+    bono de asistencia lineal: bonmoo_asistencia = 0.005*asistecia_pct
+    penallizacion por tardanzas(cada 3 tardanzas resta 0.2, sin if): penal_tard = (tardanzas //3)*0.2
+    puntaje_final = prom + bono_asistencia - penal_tard - penal_disp
+    imprimie prom, bono_asistencia, penal_tard, penal_disp, puntaje_final"""
+
