@@ -1,0 +1,10 @@
+# 16)Nomina de un restaurante con propinas y turnos: Un restaurante paga a sus mozos por hora, reparte del dia y aplica bonificacioners segun el turno. 
+
+"""Requisitos:
+    calcular el pago bse: horas_trabajadas * tarifas_hora
+    bonificacion por turno nocturno(si turno =="noche")_ 12% del pago base
+    propina del dia: repartir propina_total_dia propinal a las horas trabajadas deñ mozo respecto al total de horas del equipo
+    descuentos: 8% AFP + 3% ESSALUD sobre (base + bonificacion +propinas)
+    mostrar despglose: base, bonificacion, descuentos y neto a paga
+""" 
+
