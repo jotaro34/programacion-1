@@ -1,0 +1,13 @@
+# 18)Costeo de importancion multimoneda con spread bancario. Contexto Calcular el costo puesto en almacen incluyendoi CIF, arancel, IGV y gasto locales, considerando dos tipos de cambio.
+
+"""tarea (secuencial):
+    CIF_usd = FOB_usd + flete_usd + seguro_usd
+    CIF_soles_oficial = CIF_usd * tc_oficial
+    CIF_soles_efectivo = CIF_usd * tc_efectivo
+    CIF:prom = (CIF_soles_oficial + IF_soles_efectivo) / 2
+    arancel = CIF_prom * arancel_pct
+    base_igv = CIF_prom + arancel
+    gasto_locales = almacenaje_s/ + aforo_s/
+    total_puesto_almacen = CIF_prom + arancel + igv + gasto_locales.
+    imprimir todos los componentes y el total."""
+
