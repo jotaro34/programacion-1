@@ -1,29 +1,72 @@
-# 8) se tiene 4 esferas a,b,c,d de las cuales se sabe que 3 son de igual peso y una diferente. Realice un programa en Python que reciba como datos los pesos de las 4 esferas y determine e imprima cual es la esfera de peso diferente y si es de mayor o menos peso.
+# 15)dado un numero entero positivo n; el sistema debe determinar una combinacion de propiedades matematicas y emitir un solo mensaje priorizado. reglas: (0) si n<=0; es invalido; (1) si n es simultaneamente primo y capicua(palindromo), tiene la maxima prioridad y se reporta como "numero primo capicua", (2) si no, pero es un numero de armstrong (la suma de sus digitos elevados a la cantidad de digitos es igual a n, se reporta como tal; (4) si no cumple nada de lo anterior, se debe indicar si es par o impar y, adicionalmente, si es multiplo de 3, de 5, de ambos (estilo FizzBuzz, pero como parte de un elif final, no como bloque aislado). El estudiante debe decidir con cuidado el orden de evaluacion, ya que un numero puede cumplir varias condiciones a la vez y solo debe reportarse la de mayor prioridad.
 
-#ingresar datos
-a = float(input("ingrese el peso de la esfera a: \n"))
-b = float(input("ingrese el peso de la esfera b: \n"))
-c = float(input("ingrese el peso de la esfera c: \n"))
-d = float(input("ingrese el peso de la esfera d: \n"))
+#ingrese de datos
+n = int(input("ingrese un numero entero: \n"))
 
-#codificamos la condicion 
-if a == b and a == c:
-    if d > a:
-        print("la esfera d es diferentye y tiene mayor peso.")
-    else:
-        print("la esfera d es diferente y tiene menor peso.")
-elif a == b and a == d:
-    if c < a:
-        print("la esfera c es diferentye y tiene mayor peso.")
-    else:
-        print("la esfera c es diferente y tiene menor peso")   
-elif a == c and a == d:
-    if b > a:
-        print("la esfera b es diferentye y tiene mayor peso.")
-    else:
-        print("la esfera b es diferente y tiene menor peso")
+#codificamos la condicion  
+if n <= 0:
+    print(f"{n} no es valido.")
 else:
-    if a > b:
-        print("la esfera a es diferente y tiene maypor peso.")
+    # Cantidad de dígitos
+    if n < 10:
+        digitos = 1
+    elif n < 100:
+        digitos = 2
     else:
-        print("la esfera a es diferente y tiene menor peso.")
+        digitos = 3
+
+    # Primo
+    if n == 1:
+        primo = False
+    elif n == 2 or n == 3 or n == 5 or n == 7:
+        primo = True
+    elif n % 2 == 0 or n % 3 == 0 or n % 5 == 0 or n % 7 == 0:
+        primo = False
+    else:
+        primo = True
+
+    # Capicúa
+    if digitos == 1:
+        capicua = True
+    elif digitos == 2:
+        capicua = (n // 10 == n % 10)
+    else:
+        capicua = (n // 100 == n % 10)
+
+    # Prioridad 1
+    if primo and capicua:
+        print(f"{n} es numero primo capicua")
+
+    else:
+        # Armstrong
+        if digitos == 1:
+            armstrong = True
+        elif digitos == 2:
+            d1 = n // 10
+            d2 = n % 10
+            armstrong = (d1**2 + d2**2 == n)
+        else:
+            d1 = n // 100
+            d2 = (n // 10) % 10
+            d3 = n % 10
+            armstrong = (d1**3 + d2**3 + d3**3 == n)
+
+        # Prioridad 2
+        if armstrong:
+            print(f"{n} es numero de Armstrong")
+
+        # Prioridad 3
+        else:
+            if n % 2 == 0:
+                numero = "par"
+            else:
+                numero = "impar"
+
+            if n % 3 == 0 and n % 5 == 0:
+                print(f"{n} es {numero}, y múltiplo de 3 y 5")
+            elif n % 3 == 0:
+                print(f"{n} es {numero}, y múltiplo de 3")
+            elif n % 5 == 0:
+                print(f"{n} es {numero}, y múltiplo de 5")
+            else:
+                print(f"{n} es {numero}")
