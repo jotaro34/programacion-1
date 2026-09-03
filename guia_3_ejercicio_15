@@ -1,0 +1,29 @@
+# 8) se tiene 4 esferas a,b,c,d de las cuales se sabe que 3 son de igual peso y una diferente. Realice un programa en Python que reciba como datos los pesos de las 4 esferas y determine e imprima cual es la esfera de peso diferente y si es de mayor o menos peso.
+
+#ingresar datos
+a = float(input("ingrese el peso de la esfera a: \n"))
+b = float(input("ingrese el peso de la esfera b: \n"))
+c = float(input("ingrese el peso de la esfera c: \n"))
+d = float(input("ingrese el peso de la esfera d: \n"))
+
+#codificamos la condicion 
+if a == b and a == c:
+    if d > a:
+        print("la esfera d es diferentye y tiene mayor peso.")
+    else:
+        print("la esfera d es diferente y tiene menor peso.")
+elif a == b and a == d:
+    if c < a:
+        print("la esfera c es diferentye y tiene mayor peso.")
+    else:
+        print("la esfera c es diferente y tiene menor peso")   
+elif a == c and a == d:
+    if b > a:
+        print("la esfera b es diferentye y tiene mayor peso.")
+    else:
+        print("la esfera b es diferente y tiene menor peso")
+else:
+    if a > b:
+        print("la esfera a es diferente y tiene maypor peso.")
+    else:
+        print("la esfera a es diferente y tiene menor peso.")
