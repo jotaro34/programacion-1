@@ -1,0 +1,18 @@
+# 1)
+
+#entrada de datos
+minutos = int(input("ingrese la cantidad de minutos: \n"))
+dia = input("es domingo? (si/no): \n")
+
+#codificamos la cpndicion
+if minutos <= 5:
+    costo = 5
+elif minutos <= 8:
+    costo = 5 + ( minutos - 5 ) * 3
+elif minutos <= 10:
+    costo = 5 + 3 * 3 + (minutos - 8) * 2
+else:
+    costo = 5 + 3 * 3 + 2 + (minutos - 10) * 1
+if dia == "si" or "Si":
+    costo = costo * 1.05
+print(f"el usuario debe pagar: S/ {costo:.2f}.")
