@@ -1,0 +1,16 @@
+# 5)Escriba un programa en Python que permita calcular lo que hay que pagarle a un trabajar teniendo en ceunta su sueldo y las horas extras trabajadas. Para el pago de horas extras se tiene en cuenta la categoria del trabajador. Cada trabajdor puede tener como maximo 30 horas extra, si tiene mas solo se les pagaran 30. A los trabajadores con categoria mayor a 4 no se les debe de pagar horas extras.
+
+#ingrese los datos
+nivel = int(input("ingrese su nivel: \n"))
+sueldo = int(input("ingrese su sueldo: \n"))
+horas = int(input("ingrese la cantidad de horas extra: \n"))
+
+#codificamos la candicion
+if nivel < 4:
+    pago = sueldo
+else: 
+    if horas < 30:
+        pago = sueldo + 30
+    else:
+        pago = sueldo + horas
+print(f"el pago total sera de : S/. {pago}.")
