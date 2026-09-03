@@ -1,0 +1,16 @@
+# 6)ESSALUD desea clasificar a las personas que se jubilaran en el año de 2015. Existen 3 tipos de jubilaciones: por edad, por antiguedad joven y por antiguedad adulta. Las personas adscritas a la jubilacion por edad deben de tener 60 años y una antiguedad en su empleo de menos de 25 años. Las personas adscritas a la jubilacion por antiguedad joven deben de tener menos de 60 años y una antoguedad en su empleo de 25 años o mas. LAs opersonas adscritas a la jubilacion por antiguedad adulta deben de tener 60 años o mas y una antiguedad en su empleo de 25 años o mas. Determinar e imprimir en que tipo de jubilacion quedara adscrita una persona.
+
+#ingreso de datos 
+nombre = input("ingrese el nombre del trabajador: \n")
+edad = int(input("ingrese su edad: \n"))
+trabajo = int(input("ingrese los años de trabajo: \n"))
+
+#codificamos la condicion 
+if edad >= 60 and trabajo < 25:
+    print(f"{nombre} es un adscrito de jublicaion por edad.")
+elif edad < 60 and trabajo >= 25:
+    print(f"{nombre} es un adscrito a jubilacion por antiguedad joven.")
+elif edad >= 60 and trabajo >= 25:
+    print(f"{nombre} es un adscrito a jubilacion por antiguedad adulta.")
+else:
+    print(f"{nombre} aun no es un adscrito por jubilacion.")
