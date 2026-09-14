@@ -1,0 +1,15 @@
+# 6)Escriba un programa en python que lea n cantidades de números enteros positivos y cuando sea un negativo termine. deberá escribir estos números con la condición de que si se lee el mismo numero en forma consecutiva.
+
+#declaramos variable y lista
+numeros = []
+
+#codificamos el bucle                                                                                                       
+while True:
+    numero = int(input("Ingrese un número entero positivo: \n"))
+    if numero < 0:
+        break
+    if numero not in numeros:
+        numeros = numeros + [numero]
+
+#imprimir la ejecucion 
+print(f"Números ingresados sin repetir: {numeros}")
