@@ -1,0 +1,43 @@
+# 15)Supongase que en una reciente eleccion hubo cuatro candidatos(con o identificaciones 1,2,3,4). Usted habra de encontrar mediante un programa en python el numero de votos correspondientes a cada candidato y el porcentaje que obtuvo respecto del total de votantes. El usuario tecleara los votos de manera desorganizada, tal y como se obtuvieron en la eleccion, el final de datos esta representado por un cero. Observe como ejemplo la siguiente lista: 1,3,1,4,1,1,1,2,1,3,1,4,0. Donde 1 representa un voto para el candidato 1; 2, para el candidato 2 y asi sucesivamente.
+
+#candidatos y crea
+print("| ----------------------------------------- |")
+print("|----- 1: para el candidato Mario Ruiz -----|")
+print("|-- 2: para el candidato Walter Anchapuri --|")
+print("|---- 3: para el candidato Fidel Carita ----|")
+print("|- 4: para el candidato Fernando Martorell -|")
+print("| ----------------------------------------- |")
+votos = []
+repitente = []
+
+#codificamos el bucle
+while True:
+    voto = int(input("ingrese el numero del candidato: \n"))
+    if voto > 0 and voto < 5:
+        votos = votos + [voto]
+    elif voto == 0:
+        print("votacion finalizada.")
+        break
+    else:
+        print("Candidato no existente.") 
+total = len(votos)
+for conteo in votos:
+    if conteo not in repitente:
+        contador = 0
+        for numero in votos:
+            if conteo == numero:
+                contador = contador + 1
+        porcentaje = (contador * 100) / total
+        if conteo == 1:
+            candidato = "Mario Ruiz"
+
+        elif conteo == 2:
+            candidato = "Walter Anchapuri"
+
+        elif conteo == 3:
+            candidato = "Fidel Carita"
+
+        elif conteo == 4:
+            candidato = "Fernando Martorell"
+        print(f"el candidato {candidato}, tiene un porcentaje de votos del {porcentaje:.2f} %")
+        repitente = repitente + [conteo]
