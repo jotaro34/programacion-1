@@ -1,0 +1,14 @@
+# 11)
+
+#ingresamos datos
+inicio = int(input("Ingrese el inicio del intervalo: \n"))
+fin = int(input("Ingrese el final del intervalo: \n"))
+i = 1
+
+#imprimir los numeros especiales
+print("Números especiales:")
+while i * (i + 1) <= fin:
+    especial = i * (i + 1)
+    if especial >= inicio:
+        print(especial)
+    i = i + 1
