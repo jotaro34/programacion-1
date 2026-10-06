@@ -1,0 +1,58 @@
+"""Normalizador de telefonos: lee una liena con varios telefornos separados por comas, escritos  de distintas maneras, y llevalos al formato +51-XXXXXXXXX.
+Elimina espacios, parentesis y guiones. Acepta el prefijo +51, el prefijo 0051 o ningun prefijo.
+El numero es valido si, sin el prefijo, tiene exactamente 9 digitos y empieza con 9.
+Indica el motivo de cada invalido: "caracteres no permitidos", "deben tener 9 digitos" o "deben empezar en 9".
+Muestra una tabla alineada con el texto original, el numero normalizado con los 3 digitos centrales enmascarados (+51-952***456) y el estado.
+Entrada: +51-952123456, 952 123 456, 0051952123456, (+51) 987-654-321, +51-852122345, +51 95212E456.
+Salida: +51-952123456 valido (los 3 primeros);
++51-987-654-321 valido;
++51-852122345 invalido (debe tener 9 digitos); 
++51-95212E456 invalido (caracteres no permitidos)"""
+
+entrada = input("Ingrese los telefonos separados por comas: ")
+
+telefonos = entrada.split(",")
+
+print()
+print(f"{'Original':25} {'Normalizado':20} {'Estado'}")
+print("-" * 70)
+
+for telefono in telefonos:
+
+    original = telefono.strip()
+    numero = original
+
+    # Eliminar espacios, parentesis y guiones
+    numero = numero.replace(" ", "")
+    numero = numero.replace("(", "")
+    numero = numero.replace(")", "")
+    numero = numero.replace("-", "")
+
+    # Detectar el prefijo
+    if numero.startswith("+51"):
+        numero = numero[3:]
+    elif numero.startswith("0051"):
+        numero = numero[4:]
+
+    # Validar caracteres
+    if not numero.isdigit():
+        print(f"{original:25} {original:20} invalido (caracteres no permitidos)")
+        continue
+
+    # Validar cantidad de digitos
+    if len(numero) != 9:
+        print(f"{original:25} {'+51-' + numero:20} invalido (deben tener 9 digitos)")
+        continue
+
+    # Validar que empiece en 9
+    if not numero.startswith("9"):
+        print(f"{original:25} {'+51-' + numero:20} invalido (deben empezar en 9)")
+        continue
+
+    # Numero valido
+    normalizado = "+51-" + numero
+
+    # Enmascarar los 3 digitos centrales
+    enmascarado = normalizado[:7] + "***" + normalizado[10:]
+
+    print(f"{original:25} {enmascarado:20} valido")
