@@ -1,0 +1,57 @@
+"""Lee plcas una por una hasta que el usuario escriba FIN. una placa es validad si tiene el formato XXX-999:3 letras, un guion y tres difgitos. 
+antes de validar, normaliza la placa: quita espacios de los estremos, convirtela a mayusculas, reemplazando un espcaio interior por guion y, si tiene 6 caracteres sin guien, insertalo despues del tercero.
+si es invalida, indica el motivo: longuitud incorrecta, falta el guion en la posiicion 4, los tres primeros deben ser letras o los tres ultimos deben ser digitos.
+si es valida, indica si circula los dias  pares o impares segun su ultimo digito.
+al terminar muestra el total de placas leidas, cuantas fueron validas y el porcentaje de validas con un decimal."""
+
+leidas = 0
+validas = 0
+
+while True:
+    placa = input("Ingrese una placa: ")
+    if placa.upper() == "FIN":
+        break
+    leidas += 1
+
+    # Normalizamos la placa 
+    placa = placa.strip().upper()
+    placa = placa.replace(" ", "-")
+
+    #Contavilizamos lso caracteres y verificamos que tenga un "-"
+    if len(placa) == 6 and "-" not in placa:
+        placa = placa[:3] + "-" + placa[3:]
+
+    # Validar longitud de la placa 
+    if len(placa) != 7:
+        print(placa, "invalida (longitud incorrecta)")
+        continue
+
+    # Validar guion en posición 4
+    if placa[3] != "-":
+        print(placa, "invalida (falta el guion en la posicion 4)")
+        continue
+
+    # Validar las 3 primeras letras
+    if not (placa[0].isalpha() and placa[1].isalpha() and placa[2].isalpha()):
+        print(placa, "invalida (los 3 primeros deben ser letras)")
+        continue
+
+    # Validar los 3 últimos dígitos
+    if not (placa[4].isdigit() and placa[5].isdigit() and placa[6].isdigit()):
+        print(placa, "invalida (los 3 ultimos deben ser digitos)")
+        continue
+
+    # Si llegó aquí, contabilizamos lo válida
+    validas += 1
+
+    #verificamos las validas el dia que les corresponde si es par o impar. 
+    ultimo = int(placa[6])
+
+    if ultimo % 2 == 0:
+        print(placa, "valida, dias pares")
+    else:
+        print(placa, "valida, dias impares")
+
+porcentaje = (validas / leidas) * 100
+print()
+print(f"leidas: {leidas} | Validas: {validas} | {porcentaje:.1f} %")
