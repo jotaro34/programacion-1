@@ -1,0 +1,14 @@
+# Ejercicio 7 : CArtel con titulo y operaciones centradas
+
+"""Pide un titulo y un texto con varias oraciones separadas por punto. Imprime un cartel de 40 caracteres de ancho.
+La primera y la ultima linea del cartel son un borde: un signo +, 38 guiones y otro signo +.
+El titulo va en mayusculas, con un espacio a cada lado y centrado en 38 caracteres rellenando con el simbolo =, entre barras verticales.
+Cada oracion supera los 36 caracteres, se recorta a 33 y se le agregan 3 puntos.
+Debajo del cartel muestra la can tidad de lineas impresas, alineada a lka derecha en 40 caracteres.
+Entrada: titulo "guia de cadenas"; texto " python es divertido. las cadenas son inmutables y no se puedes modificar directamente. el slicing extrae partes"
+Salida:
+|==========GUIA DE CADENAS===========|
+|        Python es divertido         |  
+|Las cadenas son inmutables y no s...|
+|      El slicing extrae partes      |
+Lineas : 3"""
