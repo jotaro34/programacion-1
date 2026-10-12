@@ -1,0 +1,10 @@
+# Ejercicio 8 : Texto sin tildes y direccion web
+
+"""Lee un titulo y genera su version sin tildes y un identificador para una direccion web.
+Reemplaza las vocales con tilde y ü (áéíóúÁÉÍÓÚüÜ)por su version simple usando replace() dentro de un bucle que recorra dos cadenas paralelas.
+Antes de reemplazar, cuenta con count() cuantas veces apareces cada una y muestra solo las que se encontraron.
+Construye el identificador a partir del texto sin tildes: en minisculas, con los espacios convertidos en guiones y sin ningun caracter que no sea letra, digito o guion.
+El indentificador no debe tener guiones repetidos ni guiones en los extremos.
+El identificador no debe tener giioones repetidos ni guiones en los extremos.
+Entrada: " ¡Programacion en Pyathon: Metodo Rapido, facil y ÚTIL para pingüinos! "
+Salida: Reemplazamos: á=2, é=1, ó=1, Ú=1, ü=1 | Identificador: programacion-en-python-metodo-rapido-facil-y-util-para-pinguinos """
