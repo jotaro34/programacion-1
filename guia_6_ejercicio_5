@@ -1,0 +1,54 @@
+# 5)Ejercicio 5: Patron con DNI enmascarado
+
+"""Lee una linea con registros en formato  nombre:DNI separados por compas y genera un patron.
+Limpia los espacios de cada registro y escribe el nombre con la primera letra de cada palabra en mayuscula.
+El DNI es valido si tiene exactamente 8 digitos. Si es valido, muestra los 4 primeros digitos y enmascara los 4 ultimos con asteriscos.
+Para cada registro invalido indica el motivo: "falta el separador", "caracteres no numericos " o "longuitud incorrecta".
+Muestra un tabla alineada con nombre, DNI enmascarado y estado, y al final el total de registros validos e invalidos.
+Entrada: "ana TORRES: 12345678, 
+luis perez:1234567, 
+Maria Quispe : 87654321, 
+jose:12A45678, 
+carla 44556677"
+Salida: Ana Torres 1234**** VALIDO; 
+Luis Perez INVALIDO (longuitud incorrecta); 
+Maria Quispe 8765**** VALIDO; 
+Jose INVALIDO (caracteres no numericos); 
+CArla 44556677 INVALIDO (falta el separador). 
+Validos : 2 | INVALIDOS : 3 """
+
+#ingrese los datos
+entrada = input("Ingrese los registros: ")
+registros = entrada.replace("\n", "").split(",")
+validos = 0
+invalidos = 0
+
+print()
+print(f"{'NOMBRE':<20} {'DNI':<12} ESTADO")
+print("-" * 70)
+
+#codificamos el codigo
+for registro in registros:
+    registro = registro.strip()
+    if ":" not in registro:
+        nombre = registro.title()
+        print(f"{nombre:<20} {'-':<12} INVALIDO (falta el separador)")
+        invalidos += 1
+    else:
+        datos = registro.split(":", 1)
+        nombre = datos[0].strip().title()
+        dni = datos[1].strip()
+        if not dni.isdigit():
+            print(f"{nombre:<20} {'-':<12} INVALIDO (caracteres no numericos)")
+            invalidos += 1
+        elif len(dni) != 8:
+            print(f"{nombre:<20} {'-':<12} INVALIDO (longuitud incorrecta)")
+            invalidos += 1
+        else:
+            dni_oculto = dni[:4] + "****"
+            print(f"{nombre:<20} {dni_oculto:<12} VALIDO")
+            validos += 1
+
+#imprimos el resultado
+print("-" * 70)
+print(f"Validos : {validos} | INVALIDOS : {invalidos}")
