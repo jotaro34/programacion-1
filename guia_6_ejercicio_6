@@ -1,4 +1,4 @@
-"""Lee plcas una por una hasta que el usuario escriba FIN. una placa es validad si tiene el formato XXX-999:3 letras, un guion y tres difgitos. 
+"""Lee placas una por una hasta que el usuario escriba FIN. una placa es validad si tiene el formato XXX-999:3 letras, un guion y tres difgitos. 
 antes de validar, normaliza la placa: quita espacios de los estremos, convirtela a mayusculas, reemplazando un espcaio interior por guion y, si tiene 6 caracteres sin guien, insertalo despues del tercero.
 si es invalida, indica el motivo: longuitud incorrecta, falta el guion en la posiicion 4, los tres primeros deben ser letras o los tres ultimos deben ser digitos.
 si es valida, indica si circula los dias  pares o impares segun su ultimo digito.
