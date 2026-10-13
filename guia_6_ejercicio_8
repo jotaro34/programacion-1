@@ -7,4 +7,35 @@ Construye el identificador a partir del texto sin tildes: en minisculas, con los
 El indentificador no debe tener guiones repetidos ni guiones en los extremos.
 El identificador no debe tener giioones repetidos ni guiones en los extremos.
 Entrada: " ¡Programacion en Pyathon: Metodo Rapido, facil y ÚTIL para pingüinos! "
-Salida: Reemplazamos: á=2, é=1, ó=1, Ú=1, ü=1 | Identificador: programacion-en-python-metodo-rapido-facil-y-util-para-pinguinos """
+Salida: Reemplazamos: á=2, é=1, ó=1, Ú=1, ü=1 | Identificador: programacion-en-python-metodo-rapido-facil-y-util-para-pinguinos"""
+
+#ingresa los datos 
+titulo = input("Ingrese un título: ")
+con_tilde = "áéíóúÁÉÍÓÚüÜ"
+sin_tilde = "aeiouAEIOUuU"
+
+print("Reemplazamos:", end=" ")
+
+for i in range(len(con_tilde)):
+    cantidad = titulo.count(con_tilde[i])
+    if cantidad > 0:
+        print(con_tilde[i] + "=" + str(cantidad), end=", ")
+    titulo = titulo.replace(con_tilde[i], sin_tilde[i])
+
+print()
+
+identificador = titulo.lower()
+identificador = identificador.replace(" ", "-")
+permitidos = "abcdefghijklmnopqrstuvwxyz0123456789-"
+resultado = ""
+
+for caracter in identificador:
+    if caracter in permitidos:
+        resultado += caracter
+    else:
+        resultado += "-"
+while "--" in resultado:
+    resultado = resultado.replace("--", "-")
+
+resultado = resultado.strip("-")
+print("Identificador:", resultado)
