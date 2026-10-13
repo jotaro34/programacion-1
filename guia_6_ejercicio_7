@@ -12,3 +12,25 @@ Salida:
 |Las cadenas son inmutables y no s...|
 |      El slicing extrae partes      |
 Lineas : 3"""
+
+#ingresamos los datos 
+titulo = input("Ingrese el título: ")
+texto = input("Ingrese el texto: ")
+borde = "+" + "-" * 38 + "+"
+print(borde)
+titulo = titulo.upper()
+print("|" + titulo.center(38, "=") + "|")
+oraciones = texto.split(".")
+cantidad = 0
+
+for oracion in oraciones:
+    oracion = oracion.strip()
+    if oracion != "":
+        oracion = oracion.capitalize()
+        if len(oracion) > 36:
+            oracion = oracion[:33] + "..."
+        print("|" + oracion.center(38) + "|")
+        cantidad += 1
+
+print(borde)
+print(("Lineas :" + str(cantidad)).rjust(40))
