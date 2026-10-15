@@ -1,0 +1,115 @@
+#ejercicio 8
+
+"""El stock inicial es {"manzana": 100, "pera": 50, "naranja": 75, "uva":30}. Lee una linea con movimientos producto:tipo:cantidad separados por punto y coma y procesalos en orden.
+Normaliza (minmusculas y sin sobrantes) y rechaza, indicando el numero de movimiento, los de formato incorrecto, de tipo distinto de entrada o salida, o de cantidad no numerica o creo.
+Una salida de un producto que no existe se rechaza; una entrada de un producto nuevo lo crea con stock 0 antes de sumar. Una salida mayor que el stock disponible se rechaza.
+Guarda cada movimiento aceprado como tupla (producto, tipo, cantidad) en una tupla historial usando +=.
+Muestra la cantidad de movimiento procesados y rechazados y, por producto, el stock inicial, el total de entradas, el total de salidas y el stock final.
+Entrada:
+"manzana:salida:30;
+PERA:entrada:20;
+naranja:salida:80;
+uva:salida:40;
+manzana:entrada:50;
+pera:salida:15;
+kiwi:entrada:60;
+kiwi:salida:x;
+durazno:salida:5;
+naranja:salida:10;
+uva:retiro:3"
+Salida:
+Procesados: 6 | Rechazados: 5
+mov 3: stock insuficiente de naranja; mov 4: stock insuficiente de uva; mov 8: cantidad invalida; mov 9: producto inexistente; mov 11: tipo invalido
+manzana: inicial 100+50-30=120
+pera: inical 50+20-15=55
+naranja: inicial 75+0-10=65
+uva: inicial 30+0-0=30
+kiwi: inicial 0+60-0=60"""
+
+stock = {
+    "manzana": 100,
+    "pera": 50,
+    "naranja": 75,
+    "uva": 30
+}
+
+inicial = stock.copy()
+entradas = {}
+salidas = {}
+historial = ()
+rechazados = []
+
+texto = input("Ingrese la cantidad de frutas: \n")
+movimientos = texto.split(";")
+
+procesados = 0
+
+for numero, movimiento in enumerate(movimientos, start=1):
+    movimiento = movimiento.strip()
+
+    if movimiento == "":
+        continue
+
+    partes = movimiento.split(":")
+
+    if len(partes) != 3:
+        rechazados.append(f"mov {numero}: formato incorrecto")
+        continue
+
+    producto = partes[0].strip().lower()
+    tipo = partes[1].strip().lower()
+    cantidad_texto = partes[2].strip()
+
+    if tipo not in ("entrada", "salida"):
+        rechazados.append(f"mov {numero}: tipo invalido")
+        continue
+
+    try:
+        cantidad = int(cantidad_texto)
+    except ValueError:
+        rechazados.append(f"mov {numero}: cantidad invalida")
+        continue
+
+    if cantidad <= 0:
+        rechazados.append(f"mov {numero}: cantidad invalida")
+        continue
+
+    if tipo == "salida" and producto not in stock:
+        rechazados.append(f"mov {numero}: producto inexistente")
+        continue
+
+    if tipo == "salida" and cantidad > stock[producto]:
+        rechazados.append(f"mov {numero}: stock insuficiente de {producto}")
+        continue
+
+    if producto not in stock:
+        stock[producto] = 0
+        inicial[producto] = 0
+
+    if producto not in entradas:
+        entradas[producto] = 0
+        salidas[producto] = 0
+
+    if tipo == "entrada":
+        stock[producto] += cantidad
+        entradas[producto] += cantidad
+    else:
+        stock[producto] -= cantidad
+        salidas[producto] += cantidad
+
+    historial += ((producto, tipo, cantidad),)
+    procesados += 1
+
+print(f"Procesados: {procesados} | Rechazados: {len(rechazados)}")
+
+if rechazados:
+    print("; ".join(rechazados))
+
+for producto in stock:
+    entrada_total = entradas.get(producto, 0)
+    salida_total = salidas.get(producto, 0)
+
+    print(
+        f"{producto}: inicial {inicial[producto]}"
+        f"+{entrada_total}-{salida_total}={stock[producto]}"
+    )
