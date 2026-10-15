@@ -1,0 +1,83 @@
+#Ejercicio 7:
+
+"""Lee una linea con varias palabras y agrupalas en un diccionario cuya clave es una tupla con las letras de la palabra ordenas.
+Normaliza cada palabera: miniscula, sin signos de puntuacion (.,;:!?) y sin tildes; descarta las palabras vacias y las repetidas, conservando el orden de aparicion.
+Ordena las letras de cada palabra con el metodo de la burbuja (sin sorted()) y conviertelas en tupla para usarla como clave.
+Muestra solo los grupos con mas de una palabra, del mas numeroso al menos numeroso (en empate, por orden de aparicion), ordenado con bucles.
+Muestra al final las palabras unicas, la cantidad de grupos y cuantas palabras no tienen enagramas.
+Entrada: 
+Grupo 1 amor : amor,roma,mora,ramo,armo
+Grupo 2 ceort: recto,torce,corte,coter
+Grupo 3 los: sol,los,ols
+Palabras unicas: 16 | Grupos: 3 |Sin anagramas: 4"""
+
+import unicodedata
+
+texto = input("Ingrese las palabras: \n").lower()
+
+# Quitar tildes y signos de puntuación
+texto = unicodedata.normalize("NFD", texto)
+texto = "".join(letra for letra in texto if unicodedata.category(letra) != "Mn")
+
+for signo in ".,;:!?":
+    texto = texto.replace(signo, " ")
+
+palabras = texto.split()
+
+# Eliminar palabras repetidas conservando el orden
+unicas = []
+
+for palabra in palabras:
+    if palabra not in unicas:
+        unicas.append(palabra)
+
+# Agrupar palabras por sus letras ordenadas
+grupos = {}
+
+for palabra in unicas:
+    letras = list(palabra)
+
+    # Ordenamiento burbuja
+    for i in range(len(letras)):
+        for j in range(0, len(letras) - i - 1):
+            if letras[j] > letras[j + 1]:
+                letras[j], letras[j + 1] = letras[j + 1], letras[j]
+
+    clave = tuple(letras)
+
+    if clave not in grupos:
+        grupos[clave] = []
+
+    grupos[clave].append(palabra)
+
+# Conservar los grupos con más de una palabra
+grupos_validos = []
+
+for clave, palabras_grupo in grupos.items():
+    if len(palabras_grupo) > 1:
+        grupos_validos.append((clave, palabras_grupo))
+
+# Ordenar grupos por cantidad, conservando el orden en empates
+for i in range(len(grupos_validos)):
+    for j in range(0, len(grupos_validos) - i - 1):
+        if len(grupos_validos[j][1]) < len(grupos_validos[j + 1][1]):
+            grupos_validos[j], grupos_validos[j + 1] = (
+                grupos_validos[j + 1],
+                grupos_validos[j]
+            )
+
+# Mostrar resultados
+for i in range(len(grupos_validos)):
+    palabras_grupo = grupos_validos[i][1]
+    print(f"Grupo {i + 1} {''.join(grupos_validos[i][0])}: "
+          f"{', '.join(palabras_grupo)}")
+
+sin_anagramas = 0
+
+for clave, palabras_grupo in grupos.items():
+    if len(palabras_grupo) == 1:
+        sin_anagramas += 1
+
+print(f"Palabras unicas: {len(unicas)} | "
+      f"Grupos: {len(grupos_validos)} | "
+      f"Sin anagramas: {sin_anagramas}")
