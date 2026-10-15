@@ -1,0 +1,68 @@
+#ejercicio 5:
+
+"""Un diccionario guarda lugares de Tacna cuya clave es la tupla (latudtud, longitud). Lee coordenadas con el formato lat, lon y consulta el registro.
+Lugares: (-18.0146, -70.2536) Plaza de armas, (-18.0135, -70.2501) Catedral, (-17.9911, -70.2423) Estadio Jorge Basadre y (-18.005, -70.2476) Mercado Centarl.
+Valida que ambos valores sean numericos(puedes usar try /except o metodos de cadena), redondaealos a 4 decimales y ciomprueba los rango: latitud entre -90 y 90, longitud entre -180 y 180.
+Si la tupla ya esta registrada, muestra el nombre del lugra.
+Si no esta registrada, recorre el diccionario con items() y muestra el lugar mas cercano con su distancia aproximada en km (distancia euclidiana en grados multiplicada por 111).
+Entrada: 
+"-18.0146, -70.2536","-18.0100,-70.2500","91,-70","abc,10","-18.0135,-70.2501" 
+Salida: 
+(-18.0146, -70.2536): Plaza de armas
+(-18.01, -70.25): no registrado; mas cercano catedral a 0.39.km
+(91.01,-70.0): fuera de rango
+abc,10: no numerico
+(-18.0135, -70.2501): Catedral"""
+
+lugares = {
+    (-18.0146, -70.2536): "Plaza de armas",
+    (-18.0135, -70.2501): "Catedral",
+    (-17.9911, -70.2423): "Estadio Jorge Basadre",
+    (-18.0050, -70.2476): "Mercado Central"
+}
+
+while True:
+    entrada = input("Ingrese las coodenadas: \n")
+
+    if entrada == "FIN" or entrada == "fin":
+        break
+
+    coordenadas = entrada.split(",")
+
+    if len(coordenadas) != 2:
+        print(f"{entrada}: no numerico")
+        continue
+
+    try:
+        latitud = round(float(coordenadas[0].strip()), 4)
+        longitud = round(float(coordenadas[1].strip()), 4)
+    except ValueError:
+        print(f"{entrada}: no numerico")
+        continue
+
+    if not (-90 <= latitud <= 90 and -180 <= longitud <= 180):
+        print(f"({latitud}, {longitud}): fuera de rango")
+        continue
+
+    punto = (latitud, longitud)
+
+    if punto in lugares:
+        print(f"{punto}: {lugares[punto]}")
+    else:
+        distancia_minima = float("inf")
+        lugar_cercano = ""
+
+        for coordenada, nombre in lugares.items():
+            distancia = (
+                ((latitud - coordenada[0]) ** 2
+                + (longitud - coordenada[1]) ** 2) ** 0.5
+            ) * 111
+
+            if distancia < distancia_minima:
+                distancia_minima = distancia
+                lugar_cercano = nombre
+
+        print(
+            f"{punto}: no registrado; mas cercano "
+            f"{lugar_cercano} a {distancia_minima:.2f} km"
+        )
