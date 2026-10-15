@@ -1,0 +1,84 @@
+#Ejercicio 6
+
+"""Los candidatos inscritos estan en la tupla ("gomez","torres","Villanueva","Quispe"). Lee una linea con los votos separados por comas y realiza el escrutinio.
+Normaliza cada voto: quita espacios sobrantes (tambien los internos) y escribe cada palabra con la primera letrra en mayuscula.
+Es valido el voto de un candidato inscrito; los vacios y los de personas nno inscritas son invalidos y se listan (un voto vacio se muestra como "(vacio)").
+Construye el marcador con un diccionario y calcula el porcentaje de cada candidato sobre los votos validos, con un decimal.
+Si alguien supera el 50% es el ganador; si hay empate en el primer lugar indicado; en otro caso undica quien pasa a segunda vuelta y quien o quienes quedan empatados en el segundo lugar.
+Entrada:
+"gomez, TORRES, villanueva, Gomez, quispe, perez, torres, GOMEZ, quispe, villanueva, gomez,,torres,gomez,quispe, villanueva, torres,gomez,invalido,gomez,quispe,gomez"
+Salida:
+Gomez: 8 (42.1%) | Torres: 4 (21.1%) | Villanueva: 3 (15.8%) | Quispe: (21.1%)
+Validos 19 | Invalidos: 3 (Perez, (vacio), Invalido)
+Por mayoria absoluta: Gomez pasa a segunda vuelta; segundo lugar empatado entre Torres, Quispe."""
+
+candidatos = ("Gomez", "Torres", "Villanueva", "Quispe")
+
+marcador = {
+    "Gomez": 0,
+    "Torres": 0,
+    "Villanueva": 0,
+    "Quispe": 0
+}
+
+votos = input("ingresa el apellido del candidato: \n").split(",")
+invalidos = []
+validos = 0
+
+for voto in votos:
+    voto = " ".join(voto.split()).title()
+
+    if voto in candidatos:
+        marcador[voto] += 1
+        validos += 1
+    else:
+        if voto == "":
+            invalidos.append("(vacio)")
+        else:
+            invalidos.append(voto)
+
+for candidato in candidatos:
+    if validos > 0:
+        porcentaje = marcador[candidato] / validos * 100
+    else:
+        porcentaje = 0
+
+    print(f"{candidato}: {marcador[candidato]} ({porcentaje:.1f}%)", end=" | ")
+
+print()
+print(f"Validos: {validos} | Invalidos: {len(invalidos)} ({', '.join(invalidos)})")
+
+# Determinar los resultados
+mayor = max(marcador.values())
+primeros = []
+
+for candidato in candidatos:
+    if marcador[candidato] == mayor:
+        primeros.append(candidato)
+
+if validos > 0 and mayor / validos > 0.5:
+    ganador = primeros[0]
+    print(f"Por mayoria absoluta: {ganador} gana en primera vuelta.")
+
+elif len(primeros) > 1:
+    print(f"Empate en el primer lugar entre: {', '.join(primeros)}.")
+
+else:
+    primero = primeros[0]
+    segundo_mayor = -1
+    segundos = []
+
+    for candidato in candidatos:
+        if candidato != primero:
+            if marcador[candidato] > segundo_mayor:
+                segundo_mayor = marcador[candidato]
+                segundos = [candidato]
+            elif marcador[candidato] == segundo_mayor:
+                segundos.append(candidato)
+
+    print(f"Por mayoria absoluta: {primero} pasa a segunda vuelta; ", end="")
+
+    if len(segundos) > 1:
+        print(f"segundo lugar empatado entre {', '.join(segundos)}.")
+    else:
+        print(f"{segundos[0]} pasa a segunda vuelta.")
