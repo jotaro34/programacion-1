@@ -1,0 +1,60 @@
+#Ejercicio 6
+
+"""Cada linea tiene el formato nombre:n1,n2,...;opcion=valor. Define boleta(nombre, *notas, bonus=0, minino=11,redondear=True) que devuelve (promedio, estado) y llamala con boleta (nombre, *notas,**opciones).
+Valida que las notas sean enteros de 0 a 20 y que haya al menos 2;  en caso contrario muestra "notas invalidas".
+Las opciones permitidas son bonus, minimo y redondear (valores enteros; 0 equivale a False). 
+Una opcion desconocida se rechaza con su nombre.
+El promedio mas el bonus no puede pasar de 20. Aunque si el promedio es mayor o igual que 13 y ninguna nota es menor que minimo."""
+
+def boleta ( nombre, *notas, bonus =0, minimo=11, redondear= True):
+    if len(notas) < 2 or any (type(n) != int or n < 0 or n > 20 for n in notas):
+        return "notas invalidas"
+    promedio = sum(notas)/len(notas)
+    promedio = min(promedio+ bonus, 20)
+    if redondear:
+        promedio = round(promedio,2)
+    if promedio >=13 and all(n>= minimo for n in notas):
+        estado = "Aprobado"
+    else:
+        estado = "Desaprobado" 
+    return (promedio, estado)
+while True:
+    linea = input("ingrese los datos: \n").strip()
+    if linea.upper() == "FIN":
+        break
+    partes = linea. split(":")
+    if len(partes)!=2:
+        print("Formato invalido")
+        continue
+nombre = partes[0].strip()
+datos = partes[1].split()
+notas_texto = datos[0].split(",")    
+notas= []
+for n in notas_texto:
+    n = n.strip()
+    if n.isdigit():
+        notas.append(int(n))
+    else:
+        notas.append(n)
+opciones = {}
+for dato in datos[1:]:
+    if "=" not in dato:
+        print("opcion invalida")
+        continue
+    clave, valor = dato.split("=", 1)
+    clave = clave.strip().lower()
+    valor = valor.strip()
+    if clave not in ("bonus","minimo", "redondear"):
+        print(f"opcion desconocida: {clave}")
+        continue
+    if valor.lstrip("-").isdigit():
+            opciones[clave] = int(valor)
+    else:
+        print("Valor invalido:", clave)
+
+    resultado = boleta(nombre, *notas, **opciones)
+
+    if resultado == "notas invalidas":
+        print("notas invalidas")
+    else:
+        print(nombre, resultado)
