@@ -4,57 +4,102 @@
 Valida que las notas sean enteros de 0 a 20 y que haya al menos 2;  en caso contrario muestra "notas invalidas".
 Las opciones permitidas son bonus, minimo y redondear (valores enteros; 0 equivale a False). 
 Una opcion desconocida se rechaza con su nombre.
-El promedio mas el bonus no puede pasar de 20. Aunque si el promedio es mayor o igual que 13 y ninguna nota es menor que minimo."""
+El promedio mas el bonus no puede pasar de 20. Aunque si el promedio es mayor o igual que 13 y ninguna nota es menor que minimo.
+Entrada:
+"ana torres: 15,12,18", "LUIS PEREZ: 10,9,13;bonus=1","maria quispe:14,16;minimo=14;redondear=0","jose rojas:12;bonus=2","carla diez:20,18,19;bonus=3","pedro lazo:11,12,13;colorrojo","omar vega:8,x,10" 
+Salida:
+Ana Torres: prom 15 -> Aprobado
+Luis Perez: prom 12-> Desaprobado
+Maria Quispe: prom 15.0 -> Aporbado
+Jose Rojas: notas invalidas
+Carla Diaz: prom 20 -> Aprobado
+Pedro Lazo: opcion desconocida 'color'
+Omar Vega: notas invalidas """
 
-def boleta ( nombre, *notas, bonus =0, minimo=11, redondear= True):
-    if len(notas) < 2 or any (type(n) != int or n < 0 or n > 20 for n in notas):
+
+def boleta(nombre, *notas, bonus=0, minimo=11, redondear=True):
+    # Validar que existan al menos 2 notas
+    if len(notas) < 2:
         return "notas invalidas"
-    promedio = sum(notas)/len(notas)
-    promedio = min(promedio+ bonus, 20)
+
+    # Validar las notas
+    for nota in notas:
+        if type(nota) != int or nota < 0 or nota > 20:
+            return "notas invalidas"
+
+    # Calcular el promedio y agregar el bonus sin superar 20
+    promedio = min(sum(notas) / len(notas) + bonus, 20)
+
+    # Redondear si la opción está activada
     if redondear:
-        promedio = round(promedio,2)
-    if promedio >=13 and all(n>= minimo for n in notas):
+        promedio = round(promedio)
+
+    # Determinar el estado
+    if promedio >= 13 and min(notas) >= minimo:
         estado = "Aprobado"
     else:
-        estado = "Desaprobado" 
-    return (promedio, estado)
-while True:
-    linea = input("ingrese los datos: \n").strip()
-    if linea.upper() == "FIN":
-        break
-    partes = linea. split(":")
-    if len(partes)!=2:
-        print("Formato invalido")
-        continue
-nombre = partes[0].strip()
-datos = partes[1].split()
-notas_texto = datos[0].split(",")    
-notas= []
-for n in notas_texto:
-    n = n.strip()
-    if n.isdigit():
-        notas.append(int(n))
-    else:
-        notas.append(n)
-opciones = {}
-for dato in datos[1:]:
-    if "=" not in dato:
-        print("opcion invalida")
-        continue
-    clave, valor = dato.split("=", 1)
-    clave = clave.strip().lower()
-    valor = valor.strip()
-    if clave not in ("bonus","minimo", "redondear"):
-        print(f"opcion desconocida: {clave}")
-        continue
-    if valor.lstrip("-").isdigit():
-            opciones[clave] = int(valor)
-    else:
-        print("Valor invalido:", clave)
+        estado = "Desaprobado"
 
-    resultado = boleta(nombre, *notas, **opciones)
+    return promedio, estado
 
-    if resultado == "notas invalidas":
-        print("notas invalidas")
+
+# Procesar las líneas de entrada
+lineas = [
+    "ana torres: 15,12,18",
+    "LUIS PEREZ: 10,9,13;bonus=1",
+    "maria quispe:14,16;minimo=14;redondear=0",
+    "jose rojas:12;bonus=2",
+    "carla diez:20,18,19;bonus=3",
+    "pedro lazo:11,12,13;colorrojo",
+    "omar vega:8,x,10"
+]
+
+for linea in lineas:
+    partes = linea.split(":")
+    nombre = partes[0].strip().title()
+    datos = partes[1].split(";")
+
+    # Convertir las notas en una tupla
+    notas_texto = datos[0].split(",")
+    notas = []
+
+    for n in notas_texto:
+        n = n.strip()
+        if n.isdigit():
+            notas.append(int(n))
+        else:
+            notas.append(n)
+
+    # Leer las opciones
+    opciones = {}
+    error = ""
+
+    for dato in datos[1:]:
+        if "=" in dato:
+            clave, valor = dato.split("=", 1)
+            clave = clave.strip()
+            valor = valor.strip()
+
+            if clave not in ("bonus", "minimo", "redondear"):
+                error = clave
+                break
+            elif valor.lstrip("-").isdigit():
+                opciones[clave] = int(valor)
+            else:
+                error = clave
+                break
+        else:
+            error = dato.strip()
+            break
+
+    # Mostrar resultados
+    if error:
+        print(f"{nombre}: opcion desconocida '{error}'")
     else:
-        print(nombre, resultado)
+        resultado = boleta(nombre, *notas, **opciones)
+
+        if resultado == "notas invalidas":
+            print(f"{nombre}: notas invalidas")
+        else:
+            promedio, estado = resultado
+            print(f"{nombre}: prom {promedio} -> {estado}")
