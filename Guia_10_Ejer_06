@@ -1,0 +1,102 @@
+#ejercicio 6
+
+"""Simula la atencion de un banco con un diccionario colas = {"N": [], "P": []} (normales y preferenciales, ambas FIFO) y un diccionario contador para numerar los turnos.
+*Llega nombre tipo: el tipo es N o P; rechaza tipos invalidos ("tipo 'X' invalido") y nombres que ya estan en alguna cola ("Beto ya esta en cola"). El turno es el tipo seguido de un numero de 2 digitos por tipo (P01, N01, N02...).
+*Atender: atiende primero a los prefenciales y luego a los normales (usa pop(0)); si no hay nadie muestra "nadie en espera".
+*Estado: muestra los nombres en espera de cada cola. Al final muestra e orden de atencion.
+Entrada:
+"llega Ana N", "lega Beto P", "llega Carlos N", "llega Beto P", "llega Fito X", "atender", "estado", "atender", "atender"
+Salida:
+llega Ana N -> Ana recibe el turno N01
+llega Beto P -> Beto recibe el turno P01
+llega Carlos N -> Carlos recibe el turno N02
+llega Beto P  -> Beto ya esta en cola
+llega Fito X -> tipo 'x' invalido
+atender -> atiende a Beto (P01)
+estado -> P: [] | N: ['Ana', 'Carlos']
+atender -> atiende a Ana (N01)
+atender -> atiende a Carlos (N02)
+atender -> nadie en espera
+Orden de atencion: ['Beto', 'Ana', 'Carlos']"""
+
+colas = {"N": [], "P": []}
+contador = {"N": 0, "P": 0}
+orden_atencion = []
+
+comandos = (
+    "llega Ana N",
+    "llega Beto P",
+    "llega Carlos N",
+    "llega Beto P",
+    "llega Fito X",
+    "atender",
+    "estado",
+    "atender",
+    "atender",
+    "atender"
+)
+
+for comando in comandos:
+    partes = comando.split()
+
+    if partes[0] == "llega":
+        nombre = partes[1]
+        tipo = partes[2].upper()
+
+        if tipo != "N" and tipo != "P":
+            print(f"{comando} -> tipo '{tipo.lower()}' invalido")
+        else:
+            encontrado = False
+
+            for t in colas:
+                for persona in colas[t]:
+                    if persona[0] == nombre:
+                        encontrado = True
+
+            if encontrado:
+                print(f"{comando} -> {nombre} ya esta en cola")
+            else:
+                contador[tipo] += 1
+                turno = tipo + str(contador[tipo]).zfill(2)
+
+                colas[tipo].append((nombre, turno))
+
+                print(
+                    f"{comando} -> {nombre} recibe el turno {turno}"
+                )
+
+    elif partes[0] == "atender":
+        if len(colas["P"]) > 0:
+            persona = colas["P"].pop(0)
+            orden_atencion.append(persona[0])
+
+            print(
+                f"atender -> atiende a {persona[0]} "
+                f"({persona[1]})"
+            )
+
+        elif len(colas["N"]) > 0:
+            persona = colas["N"].pop(0)
+            orden_atencion.append(persona[0])
+
+            print(
+                f"atender -> atiende a {persona[0]} "
+                f"({persona[1]})"
+            )
+
+        else:
+            print("atender -> nadie en espera")
+
+    elif partes[0] == "estado":
+        nombres_p = []
+        nombres_n = []
+
+        for persona in colas["P"]:
+            nombres_p.append(persona[0])
+
+        for persona in colas["N"]:
+            nombres_n.append(persona[0])
+
+        print(f"estado -> P: {nombres_p} | N: {nombres_n}")
+
+print(f"Orden de atencion: {orden_atencion}")
