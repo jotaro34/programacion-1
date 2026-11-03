@@ -1,0 +1,140 @@
+#Ejercicio 6
+
+"""Crea la clase Fraccion (num, den) que se simplifica automaticamente con el maximo comun divisor (algoritmo de euclides), mantiene el denominador positivo y define los metodos sumar, restar, multiplicar y dividir, ademas de __str__(muestra solo el numerador si el denominador es 1) y __eq__. El programa solicita operaciones con el formato "a/b operador c/d" hasta ingresar fin.
+*Operadores validos: +,-,*,/. Un denominador 0, una division entre fraccion nula o un formato incorrecto se informan como "error" con su motivo.
+*Muestra cada resultado simplificado y, si es mayor que 1 en valor absoluto, tambien como numero mixto.
+*Al final indica cuantas operaciones fueron correctas y cual fue el mayor resultado (compara por valor decimal).
+Entrada:
+"1/2 + 1/3",
+"3/4 - 5/4",
+"2/3 * 9/4",
+"5/6 / 0/3",
+"4/0 + 1/2",
+"7/-2 + 1/2",
+"1/2 ^ 1/3",
+"3/4 * 4/3",
+"fin"
+Salida:
+1/2 + 1/3 = 5/6
+3/4 - 5/4 = -1/2
+2/3 * 9/4 = 3/2 = 1 1/2
+5/6 / 0/3 -> error: division entre cero
+4/0 + 1/2 -> error: denominador 0
+7/-2 + 1/2 = -3
+1/2 ^ 1/3 -> error: formato incorrecto
+3/4 * 4/3 = 1
+correctas: 5 | Mayor resultado: 3/2"""
+
+import re
+
+# Maximo comun divisor: Algoritmo de Euclides
+def mcd(a, b):
+    while b:
+        a, b = b, a % b
+    return abs(a)
+
+# Clase Fraccion
+class Fraccion:
+    def __init__(self, num, den):
+        if den == 0:
+            raise ValueError("denominador 0")
+
+        if den < 0:
+            num, den = -num, -den
+
+        divisor = mcd(num, den)
+        self.num = num // divisor
+        self.den = den // divisor
+
+    def sumar(self, otra):
+        return Fraccion(self.num * otra.den + otra.num * self.den,
+                        self.den * otra.den)
+
+    def restar(self, otra):
+        return Fraccion(self.num * otra.den - otra.num * self.den,
+                        self.den * otra.den)
+
+    def multiplicar(self, otra):
+        return Fraccion(self.num * otra.num, self.den * otra.den)
+
+    def dividir(self, otra):
+        if otra.num == 0:
+            raise ValueError("division entre cero")
+        return Fraccion(self.num * otra.den, self.den * otra.num)
+
+    def __str__(self):
+        return str(self.num) if self.den == 1 else f"{self.num}/{self.den}"
+
+    def __eq__(self, otra):
+        return self.num == otra.num and self.den == otra.den
+
+# Funcion para mostrar numero mixto
+def mixto(f):
+    if abs(f.num) <= f.den:
+        return ""
+
+    entero = abs(f.num) // f.den
+    residuo = abs(f.num) % f.den
+
+    if f.num < 0:
+        entero = -entero
+
+    return str(entero) if residuo == 0 else f"{entero} {residuo}/{f.den}"
+
+# Funcion para procesar operaciones
+def calcular(linea):
+    patron = r"^\s*(-?\d+)\s*/\s*(-?\d+)\s*([+\-*/])\s*(-?\d+)\s*/\s*(-?\d+)\s*$"
+    datos = re.match(patron, linea)
+
+    if not datos:
+        raise ValueError("formato incorrecto")
+
+    a, b, op, c, d = datos.groups()
+    f1 = Fraccion(int(a), int(b))
+    f2 = Fraccion(int(c), int(d))
+
+    operaciones = {
+        "+": f1.sumar,
+        "-": f1.restar,
+        "*": f1.multiplicar,
+        "/": f1.dividir
+    }
+
+    resultado = operaciones[op](f2)
+    return f1, op, f2, resultado
+
+# Programa principal (sin funcion main)
+correctas = 0
+mayor = None
+
+print("CALCULADORA DE FRACCIONES")
+print("Formato: a/b operador c/d")
+print("Operadores: +, -, *, /")
+print("Escriba 'fin' para terminar")
+
+while True:
+    linea = input("\nIngrese operacion: ").strip()
+
+    if linea.lower() == "fin":
+        break
+
+    try:
+        f1, op, f2, resultado = calcular(linea)
+
+        print(f"{f1} {op} {f2} = {resultado}")
+
+        numero = mixto(resultado)
+        if numero:
+            print("Numero mixto:", numero)
+
+        correctas += 1
+
+        if mayor is None or resultado.num / resultado.den > mayor.num / mayor.den:
+            mayor = resultado
+
+    except ValueError as e:
+        print(f"{linea} -> error: {e}")
+
+print("\nRESUMEN")
+print("correctas:", correctas)
+print("Mayor resultado:", mayor if mayor is not None else "ninguno")
