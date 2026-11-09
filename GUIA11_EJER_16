@@ -1,0 +1,171 @@
+#Ejercicio 16
+
+"""Crea la clase Tarea (nombre, duracion, dependencias) y la clase Proyecto que guarda las tareas en un diccionario. El metodo orden() devuelve una lista de tareas en un  orden valido (cada tarea despues de sus dependencias; ante varias opciones se elige la de menor nombre alfabetico) o None si hay un ciclo, y fin_mas_temprano() calcula en que momento termina cada tarea. El programa solicita la cantidad de tareas y cada tarea como "nombre duracion dep1, dep2" (la tercera parte es opcional).
+*Una tarea con duracion no entera o menor que 1, un nombre repetido o una dependencia que no existe ser rechaza al terminar de leer (informa la causa).
+*Una tarea puede empezar cuando termina todas sus dependencias; su fin es inicio + duracion.
+*Muestra el orden, el inicio y fin de cada tarea y la duracion total del proyecto.
+*Si existe un ciclo informa "ciclo detectado" y las tareas invilucradas (las que no se puedieron ordenar)."""
+
+
+class Tarea:
+    def __init__(self, nombre, duracion, dependencias):
+        self.nombre = nombre
+        self.duracion = duracion
+        self.dependencias = dependencias
+
+
+class Proyecto:
+    def __init__(self):
+        self.tareas = {}
+        self.no_ordenadas = []
+
+    def agregar(self, tarea):
+        self.tareas[tarea.nombre] = tarea
+
+    def orden(self):
+        pendientes = list(self.tareas.keys())
+        resultado = []
+        completadas = []
+
+        while pendientes:
+            disponibles = []
+
+            for nombre in pendientes:
+                tarea = self.tareas[nombre]
+
+                if all(dep in completadas for dep in tarea.dependencias):
+                    disponibles.append(nombre)
+
+            if not disponibles:
+                self.no_ordenadas = sorted(pendientes)
+                return None
+
+            nombre = min(disponibles)
+
+            resultado.append(nombre)
+            completadas.append(nombre)
+            pendientes.remove(nombre)
+
+        self.no_ordenadas = []
+        return resultado
+
+    def fin_mas_temprano(self):
+        orden = self.orden()
+
+        if orden is None:
+            return None
+
+        tiempos = {}
+
+        for nombre in orden:
+            tarea = self.tareas[nombre]
+
+            if tarea.dependencias:
+                inicio = max(
+                    tiempos[dep][1] for dep in tarea.dependencias
+                )
+            else:
+                inicio = 0
+
+            fin = inicio + tarea.duracion
+
+            tiempos[nombre] = (inicio, fin)
+
+        return tiempos
+
+
+# PROGRAMA PRINCIPAL
+
+proyecto = Proyecto()
+rechazos = []
+
+cantidad = int(input("Cantidad de tareas: "))
+
+for i in range(cantidad):
+    entrada = input("Tarea: ").strip()
+    partes = entrada.split(maxsplit=2)
+
+    if len(partes) < 2:
+        rechazos.append("tarea: formato inválido")
+        continue
+
+    nombre = partes[0]
+    duracion_texto = partes[1]
+
+    if nombre in proyecto.tareas:
+        rechazos.append(nombre + ": repetida")
+        continue
+
+    try:
+        duracion = int(duracion_texto)
+
+        if duracion < 1:
+            raise ValueError
+
+    except ValueError:
+        rechazos.append(nombre + ": duración inválida")
+        continue
+
+    dependencias = []
+
+    if len(partes) == 3:
+        dependencias = [
+            dep.strip() for dep in partes[2].split(",")
+        ]
+
+    tarea = Tarea(nombre, duracion, dependencias)
+    proyecto.agregar(tarea)
+
+
+# VALIDAR DEPENDENCIAS
+
+cambio = True
+
+while cambio:
+    cambio = False
+
+    for nombre in list(proyecto.tareas.keys()):
+        tarea = proyecto.tareas[nombre]
+
+        inexistentes = [
+            dep for dep in tarea.dependencias
+            if dep not in proyecto.tareas
+        ]
+
+        if inexistentes:
+            rechazos.append(
+                nombre + ": dependencia inexistente (" +
+                ", ".join(inexistentes) + ")"
+            )
+
+            del proyecto.tareas[nombre]
+            cambio = True
+
+
+# MOSTRAR RESULTADOS
+
+print("\nRechazos:", rechazos)
+
+orden = proyecto.orden()
+
+if orden is None:
+    print("Ciclo detectado")
+    print("Tareas involucradas:", proyecto.no_ordenadas)
+
+else:
+    tiempos = proyecto.fin_mas_temprano()
+
+    for nombre in orden:
+        inicio, fin = tiempos[nombre]
+
+        print(
+            nombre,
+            " inicio", inicio,
+            " fin", fin
+        )
+
+    duracion_total = max(
+        fin for inicio, fin in tiempos.values()
+    ) if tiempos else 0
+
+    print("Duración total:", duracion_total)
