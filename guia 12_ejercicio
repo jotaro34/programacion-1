@@ -1,0 +1,117 @@
+#ejercicio 6
+
+"""El programa solicita la cantidad n de estudiantes y luego una linea por estudiante con el formato "nombre n1 n2 n3 n4". Guarda los datos en notas.scv con el modulo csv (columnas nombre, n1, n2. n3, n4, promedio) y luego lo vuelve a leer con scv.DictReader para mostrar el ranking.
+*Una linea es invalida (muestra "linea invalida" y se vuelve a pedir) si no tiene exactamente 5 datos, si alguna nota no es numerica o si esta fuera del rango 0-20; no cuenta omo uno de los n.
+*el promedio es ponderado con la tupla PESOS = (0.20, 0.20, 0.25, 0.35) y se guarda redondeado a 2 decimales. estado: "Aprobado" si es mayor o igual que 11 y "Desaprobado" en otro caso.
+*Muestra el ranking de mayor a menor promedio (en empate, por nombre) con el formato "puesto.nombre promedio estado" y, al final, un diccionario con la cantidad de estudiantes por estado.
+Entrada:
+"4", 
+"Ana 15 12 18 9",
+"Beto 8 10",
+"Carla 20 21 10 10",
+"Carla 20 18 10 12",
+"Diego 5 6 4 3",
+"Eva 14 16 12 16"
+Salida:
+linea invalida
+linea invalida
+1. Eva   14.60 Aprobado
+2. Carla 14.30 Aprobado
+3. Ana   13.05 Aprobado
+4. Diego  4.25 Desaprobado
+{'Aprobado': 3, 'Desaprobado': 1}"""
+
+import csv
+
+PESOS = (0.20, 0.20, 0.25, 0.35)
+
+class Estudiante:
+    def __init__(self, nombre, notas):
+        self.nombre = nombre
+        self.notas = notas
+        self.promedio = round(
+            sum(nota * peso for nota, peso in zip(notas, PESOS)), 2)
+        self.estado = "Aprobado" if self.promedio >= 11 else "Desaprobado"
+
+def validar_linea(linea):
+    datos = linea.split()
+
+    if len(datos) != 5:
+        return None
+
+    nombre = datos[0]
+
+    try:
+        notas = [float(nota) for nota in datos[1:]]
+    except ValueError:
+        return None
+
+    for nota in notas:
+        if nota < 0 or nota > 20:
+            return None
+
+    return Estudiante(nombre, notas)
+
+def guardar_estudiantes(estudiantes):
+    with open("notas.csv", "w", newline="", encoding="utf-8") as archivo:
+        campos = ["nombre", "n1", "n2", "n3", "n4", "promedio"]
+
+        escritor = csv.DictWriter(archivo, fieldnames=campos)
+        escritor.writeheader()
+
+        for estudiante in estudiantes:
+            escritor.writerow({
+                "nombre": estudiante.nombre,
+                "n1": estudiante.notas[0],
+                "n2": estudiante.notas[1],
+                "n3": estudiante.notas[2],
+                "n4": estudiante.notas[3],
+                "promedio": f"{estudiante.promedio:.2f}"})
+
+def mostrar_ranking():
+    estudiantes = []
+
+    with open("notas.csv", "r", newline="", encoding="utf-8") as archivo:
+        lector = csv.DictReader(archivo)
+
+        for fila in lector:
+            estudiantes.append(fila)
+
+    estudiantes.sort(
+        key=lambda e: (-float(e["promedio"]), e["nombre"].lower()))
+
+    conteo = {"Aprobado": 0, "Desaprobado": 0}
+
+    for puesto, estudiante in enumerate(estudiantes, start=1):
+        promedio = float(estudiante["promedio"])
+        estado = "Aprobado" if promedio >= 11 else "Desaprobado"
+
+        conteo[estado] += 1
+
+        print(
+            f"{puesto}. {estudiante['nombre']:<6} "
+            f"{promedio:.2f} {estado}"
+        )
+
+    print(conteo)
+
+def main():
+    n = int(input("Cantidad de estudiantes: "))
+    estudiantes = []
+
+    while len(estudiantes) < n:
+        linea = input("Ingrese nombre y cuatro notas: ")
+
+        estudiante = validar_linea(linea)
+
+        if estudiante is None:
+            print("linea invalida")
+        else:
+            estudiantes.append(estudiante)
+
+    guardar_estudiantes(estudiantes)
+
+    print("\nRANKING DE ESTUDIANTES")
+    mostrar_ranking()
+
+main()
